@@ -31,9 +31,15 @@ parentElement.insertBefore(aElement, pElement);
 /*----------- Exercise #3: REMOVING/REPLACING ELEMENTS/OBJECTS -----------*/
 
 // TODO: Replace the "Child Node" with a new <p> element that reads "New Child Node"
-
+let parent1 = document.getElementById("exercise-container3");
+let childElement = document.getElementById("N1");
+let newElement = document.createElement('p');
+newElement.textContent = "New Child Node";
+parent1.replaceChild(newElement, childElement);
 // TODO: Remove the "New Child Node"
-
+setTimeout(() => {
+    parent1.removeChild(newElement)
+}, 5000);
 /*----------- Exercise #4: LIST ITEMS ----------- */
 // Use the following array of values to generate a list on the DOM
 
@@ -41,12 +47,18 @@ let list = [ "apples", "bananas", "carrots", "dragon fruit", "eggplant", "fish",
 
 
 // TODO: Create an unordered list element
-
-// TODO: Iterate over the array values, and create a list item element for each
-
-// TODO: Append the new list items to the unordered list element
-
 // TODO: Append the unordered list to the `div#container` under exercise 4 
+let parent2 = document.getElementById("container");
+let ulList = document.createElement("ul");
+parent2.appendChild(ulList);
+let ul = document.getElementsByTagName("ul")[0];
+// TODO: Iterate over the array values, and create a list item element for each
+// TODO: Append the new list items to the unordered list element
+for (let item of list) {
+    let li = document.createElement("li")
+    li.textContent = item;
+    ul.appendChild(li);
+}
 
 /*----------- Exercise #5: DOM EVENTS --------------*/
 
@@ -54,3 +66,24 @@ let list = [ "apples", "bananas", "carrots", "dragon fruit", "eggplant", "fish",
 // -> "Clicking the button triggers the onclick event, which calls the JS function show()... which alerts the user"
 // This div should be a 'modal' that covers the main content on the screen
 // BONUS: The modal popup should be able to be closed. Refactor for this functionality
+
+function show() {
+    let modal = document.createElement("div");
+    modal.id = "modal";
+    const modalCard = document.createElement("div");
+    modalCard.classList.add("modal-card");
+    const closeButton = document.createElement("button");
+    closeButton.innerText = "close";
+    closeButton.addEventListener("click", function() {
+        modal.remove();
+    });
+    const message = document.createElement("p");
+    message.innerText = "Clicking the button triggers the onclick event, which calls the JS function show()... which alerts the user";
+    modalCard.appendChild(message);
+    modalCard.appendChild(closeButton);
+    modal.appendChild(modalCard);
+    document.body.appendChild(modal);
+}
+
+let button = document.getElementById("btn");
+button.addEventListener("click", show);
